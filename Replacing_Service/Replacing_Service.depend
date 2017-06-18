@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1497754649 source:d:\bitel\interview assignment\design\application\replacing_service\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
