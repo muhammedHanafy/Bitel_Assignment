@@ -78,6 +78,7 @@ int main()
     U8 u8TempFromStringSize;
     U8 u8TempCounter = 0 ;
     unsigned long u32TempFileAdd = 1 ;
+    unsigned long u32LastStringAdd ;
 
     /*  FILE* myFile = fopen("file.txt",     );*/
     printf("Please enter a command:\n");
@@ -318,10 +319,107 @@ int main()
                 if(u8IOptIndex != 0)
                 {
                     /* all */
+                    a = 'S';
+                    fseek(FilePointer[u8FileIndex], 0, SEEK_SET);
+                    while( a  != EOF)
+                    {
+                        u8TempCounter = 0 ;
+                        u8TempFromStringSize = u8FromStringSize;
+                        enuStringCompareState = STRING_MATCHED;
+                        u32TempFileAdd = ftell(FilePointer[u8FileIndex]);
+
+                        while( (u8TempFromStringSize > 0) &&(enuStringCompareState == STRING_MATCHED))
+                        {
+                            a = fgetc(FilePointer[u8FileIndex]);
+                            LetterNoCase = (int)au8InputCommand[u8FromStringIndex + u8TempCounter];
+                            if ((a >= 65) && (a <= 90))
+                            {
+                                aLowerCase = a + 32;
+                            }
+                            else
+                            {
+                                aLowerCase = a ;
+                            }
+                            if((a >= 97) && (a <= 122))
+                            {
+                                aUpperCase = a - 32;
+                            }
+                            else
+                            {
+                                aUpperCase = a ;
+                            }
+
+                            if( (LetterNoCase == aLowerCase) || (LetterNoCase == aUpperCase))
+                            {
+                                enuStringCompareState = STRING_MATCHED;
+                            }
+                            else
+                            {
+                                enuStringCompareState = STRING_NOT_MATCHED;
+                            }
+                            u8TempFromStringSize--;
+                            u8TempCounter++;
+                        }
+
+                        if(enuStringCompareState == STRING_MATCHED)
+                        {
+                            /* replace */
+                            fseek(FilePointer[u8FileIndex], (u32TempFileAdd + u8ToStringSize - 1 ), SEEK_SET);
+                            u32LastStringAdd = u32TempFileAdd ;
+                        }
+                        else
+                        {
+                            u32TempFileAdd += 1;
+                        }
+                    }
                 }
                 else
                 {
                     /* similar */
+                    a = 'S';
+                    fseek(FilePointer[u8FileIndex], 0, SEEK_SET);
+                    while( a  != EOF)
+                    {
+                        u8TempCounter = 0 ;
+                        u8TempFromStringSize = u8FromStringSize;
+                        enuStringCompareState = STRING_MATCHED;
+                        u32TempFileAdd = ftell(FilePointer[u8FileIndex]);
+
+                        while( (u8TempFromStringSize > 0) &&(enuStringCompareState == STRING_MATCHED))
+                        {
+                            a = fgetc(FilePointer[u8FileIndex]);
+                            if( a == (int)au8InputCommand[u8FromStringIndex + u8TempCounter])
+                            {
+                                enuStringCompareState = STRING_MATCHED;
+                            }
+                            else
+                            {
+                                enuStringCompareState = STRING_NOT_MATCHED;
+                            }
+                            u8TempFromStringSize--;
+                            u8TempCounter++;
+                        }
+
+                        if(enuStringCompareState == STRING_MATCHED)
+                        {
+                            /* replace */
+                            fseek(FilePointer[u8FileIndex], (u32TempFileAdd + u8ToStringSize - 1 ), SEEK_SET);
+                            u32LastStringAdd = u32TempFileAdd ;
+                        }
+                        else
+                        {
+                            u32TempFileAdd += 1;
+                        }
+                    }
+                }
+                                /* replace */
+                u32TempFileAdd = u32LastStringAdd;
+                fseek(FilePointer[u8FileIndex], u32TempFileAdd, SEEK_SET);
+                u8TempFromStringSize = u8ToStringSize;
+
+                for(u8TempCounter  = 0 ; u8TempCounter < u8ToStringSize; u8TempCounter++)
+                {
+                    fputc(au8InputCommand[u8ToStringIndex + u8TempCounter] , FilePointer[u8FileIndex]);
                 }
                 fclose( (FILE *)FilePointer[u8FileIndex] );
             }
@@ -341,10 +439,119 @@ int main()
                 if(u8IOptIndex != 0)
                 {
                     /* all */
+                    a = 'S';
+                    fseek(FilePointer[u8FileIndex], 0, SEEK_SET);
+                    while( a  != EOF)
+                    {
+                        u8TempCounter = 0 ;
+                        u8TempFromStringSize = u8FromStringSize;
+                        enuStringCompareState = STRING_MATCHED;
+                        u32TempFileAdd = ftell(FilePointer[u8FileIndex]);
+
+                        while( (u8TempFromStringSize > 0) &&(enuStringCompareState == STRING_MATCHED))
+                        {
+                            a = fgetc(FilePointer[u8FileIndex]);
+                            LetterNoCase = (int)au8InputCommand[u8FromStringIndex + u8TempCounter];
+                            if ((a >= 65) && (a <= 90))
+                            {
+                                aLowerCase = a + 32;
+                            }
+                            else
+                            {
+                                aLowerCase = a ;
+                            }
+                            if((a >= 97) && (a <= 122))
+                            {
+                                aUpperCase = a - 32;
+                            }
+                            else
+                            {
+                                aUpperCase = a ;
+                            }
+
+                            if( (LetterNoCase == aLowerCase) || (LetterNoCase == aUpperCase))
+                            {
+                                enuStringCompareState = STRING_MATCHED;
+                            }
+                            else
+                            {
+                                enuStringCompareState = STRING_NOT_MATCHED;
+                            }
+                            u8TempFromStringSize--;
+                            u8TempCounter++;
+                        }
+
+                        if(enuStringCompareState == STRING_MATCHED)
+                        {
+                            /* replace */
+                            fseek(FilePointer[u8FileIndex], u32TempFileAdd, SEEK_SET);
+                            u8TempFromStringSize = u8ToStringSize;
+
+                            for(u8TempCounter  = 0 ; u8TempCounter < u8ToStringSize; u8TempCounter++)
+                            {
+                                fputc(au8InputCommand[u8ToStringIndex + u8TempCounter] , FilePointer[u8FileIndex]);
+                            }
+
+                            u32TempFileAdd = ftell(FilePointer[u8FileIndex]);
+                            u32TempFileAdd -= 1 ;
+                            fseek(FilePointer[u8FileIndex], u32TempFileAdd, SEEK_SET);
+                            a  = EOF;
+
+                        }
+                        else
+                        {
+                            u32TempFileAdd += 1;
+                        }
+                    }
                 }
                 else
                 {
                     /* similar */
+                    a = 'S';
+                    fseek(FilePointer[u8FileIndex], 0, SEEK_SET);
+                    while( a  != EOF)
+                    {
+                        u8TempCounter = 0 ;
+                        u8TempFromStringSize = u8FromStringSize;
+                        enuStringCompareState = STRING_MATCHED;
+                        u32TempFileAdd = ftell(FilePointer[u8FileIndex]);
+
+                        while( (u8TempFromStringSize > 0) &&(enuStringCompareState == STRING_MATCHED))
+                        {
+                            a = fgetc(FilePointer[u8FileIndex]);
+                            if( a == (int)au8InputCommand[u8FromStringIndex + u8TempCounter])
+                            {
+                                enuStringCompareState = STRING_MATCHED;
+                            }
+                            else
+                            {
+                                enuStringCompareState = STRING_NOT_MATCHED;
+                            }
+                            u8TempFromStringSize--;
+                            u8TempCounter++;
+                        }
+
+                        if(enuStringCompareState == STRING_MATCHED)
+                        {
+                            /* replace */
+                            fseek(FilePointer[u8FileIndex], u32TempFileAdd, SEEK_SET);
+                            u8TempFromStringSize = u8ToStringSize;
+
+                            for(u8TempCounter  = 0 ; u8TempCounter < u8ToStringSize; u8TempCounter++)
+                            {
+                                fputc(au8InputCommand[u8ToStringIndex + u8TempCounter] , FilePointer[u8FileIndex]);
+                            }
+
+                            u32TempFileAdd = ftell(FilePointer[u8FileIndex]);
+                            u32TempFileAdd -= 1 ;
+                            fseek(FilePointer[u8FileIndex], u32TempFileAdd, SEEK_SET);
+                            a  = EOF;
+                        }
+                        else
+                        {
+                            u32TempFileAdd += 1;
+                        }
+                    }
                 }
                 fclose( (FILE *)FilePointer[u8FileIndex] );
             }
@@ -364,7 +571,7 @@ int main()
                 if(u8IOptIndex != 0)
                 {
 
-                    /* similar */
+                    /* all */
                     a = 'S';
                     fseek(FilePointer[u8FileIndex], 0, SEEK_SET);
                     while( a  != EOF)
