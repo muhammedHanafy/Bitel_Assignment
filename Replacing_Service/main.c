@@ -72,7 +72,9 @@ int main()
     char au8StringNameFile[20];
     U8 u8Counter = 0 ;
     int a;
-
+    U8 u8TempFromStringSize;
+    U8 u8TempCounter = 0 ;
+    unsigned long u32TempFileAdd = 1 ;
 
     /*  FILE* myFile = fopen("file.txt",     );*/
     printf("Please enter a command:\n");
@@ -84,73 +86,73 @@ int main()
     enuStringCompareState = compare_string((const U8 *)&au8InputCommand[0] , (const U8 *)"replace ", 8);
 
     if(enuStringCompareState == STRING_MATCHED)
-     {
+    {
         printf("MATCHED\n");
         /* get options */
         enuStringCompareState = STRING_NOT_MATCHED;
         u8TempStringIndex = 8 ;
         while((enuStringCompareState == STRING_NOT_MATCHED)&&(u8TempStringIndex < 100))
         {
-                enuStringCompareState = compare_string((const U8 *)&au8InputCommand[u8TempStringIndex] , (const U8 *)" -- ", 4);
-                if(enuStringCompareState == STRING_NOT_MATCHED)
-                {
-                        u8TempStringIndex++;
-                }
-                else
-                {
-                    u8SpacerStringIndex = u8TempStringIndex + 1;
-                }
+            enuStringCompareState = compare_string((const U8 *)&au8InputCommand[u8TempStringIndex] , (const U8 *)" -- ", 4);
+            if(enuStringCompareState == STRING_NOT_MATCHED)
+            {
+                u8TempStringIndex++;
+            }
+            else
+            {
+                u8SpacerStringIndex = u8TempStringIndex + 1;
+            }
 
         }
 
     }
     if(enuStringCompareState == STRING_MATCHED)
-     {
-         printf("MATCHED\n");
-         /* get options */
-         enuStringCompareState = STRING_NOT_MATCHED;
-         u8TempStringIndex--;
-         while((enuStringCompareState == STRING_NOT_MATCHED)&&(u8TempStringIndex > 7))
-         {
+    {
+        printf("MATCHED\n");
+        /* get options */
+        enuStringCompareState = STRING_NOT_MATCHED;
+        u8TempStringIndex--;
+        while((enuStringCompareState == STRING_NOT_MATCHED)&&(u8TempStringIndex > 7))
+        {
             enuStringCompareState = compare_string((const U8 *)&au8InputCommand[u8TempStringIndex] , (const U8 *)" ", 1);
             if(enuStringCompareState == STRING_NOT_MATCHED)
             {
                 u8TempStringIndex--;
             }
 
-         }
-         u8ToStringIndex = u8TempStringIndex + 1;
-         u8ToStringSize = (u8SpacerStringIndex - u8ToStringIndex ) - 1;
+            }
+        u8ToStringIndex = u8TempStringIndex + 1;
+        u8ToStringSize = (u8SpacerStringIndex - u8ToStringIndex ) - 1;
 
-     }
-     if(enuStringCompareState == STRING_MATCHED)
-     {
-         printf("MATCHED\n");
-         /* get options */
-         enuStringCompareState = STRING_NOT_MATCHED;
-         u8TempStringIndex--;
-         while((enuStringCompareState == STRING_NOT_MATCHED)&&(u8TempStringIndex > 7))
-         {
+    }
+    if(enuStringCompareState == STRING_MATCHED)
+    {
+        printf("MATCHED\n");
+        /* get options */
+        enuStringCompareState = STRING_NOT_MATCHED;
+        u8TempStringIndex--;
+        while((enuStringCompareState == STRING_NOT_MATCHED)&&(u8TempStringIndex > 7))
+        {
             enuStringCompareState = compare_string((const U8 *)&au8InputCommand[u8TempStringIndex] , (const U8 *)" ", 1);
             if(enuStringCompareState == STRING_NOT_MATCHED)
             {
                 u8TempStringIndex--;
             }
 
-         }
-         u8FromStringIndex = u8TempStringIndex + 1;
-         u8FromStringSize = (u8ToStringIndex - u8FromStringIndex ) - 1;
+        }
+        u8FromStringIndex = u8TempStringIndex + 1;
+        u8FromStringSize = (u8ToStringIndex - u8FromStringIndex ) - 1;
 
-     }
-     if(enuStringCompareState == STRING_MATCHED)
-     {
-         printf("MATCHED\n");
-         u8FOptIndex = 0  ;
-         /* get options */
-         enuStringCompareState = STRING_NOT_MATCHED;
-         u8TempStringIndex = u8FromStringIndex - 2;
-         while((enuStringCompareState == STRING_NOT_MATCHED)&&(u8TempStringIndex > 7))
-         {
+    }
+    if(enuStringCompareState == STRING_MATCHED)
+    {
+        printf("MATCHED\n");
+        u8FOptIndex = 0  ;
+        /* get options */
+        enuStringCompareState = STRING_NOT_MATCHED;
+        u8TempStringIndex = u8FromStringIndex - 2;
+        while((enuStringCompareState == STRING_NOT_MATCHED)&&(u8TempStringIndex > 7))
+        {
             enuStringCompareState = compare_string((const U8 *)&au8InputCommand[u8TempStringIndex] , (const U8 *)"-f", 2);
             if(enuStringCompareState == STRING_NOT_MATCHED)
             {
@@ -161,15 +163,15 @@ int main()
                 u8FOptIndex = u8TempStringIndex  ;
             }
 
-         }
+        }
 
 
-         u8BOptIndex = 0 ;
-         /* get options */
-         enuStringCompareState = STRING_NOT_MATCHED;
-         u8TempStringIndex = u8FromStringIndex - 2;
-         while((enuStringCompareState == STRING_NOT_MATCHED)&&(u8TempStringIndex > 7))
-         {
+        u8BOptIndex = 0 ;
+        /* get options */
+        enuStringCompareState = STRING_NOT_MATCHED;
+        u8TempStringIndex = u8FromStringIndex - 2;
+        while((enuStringCompareState == STRING_NOT_MATCHED)&&(u8TempStringIndex > 7))
+        {
             enuStringCompareState = compare_string((const U8 *)&au8InputCommand[u8TempStringIndex] , (const U8 *)"-b", 2);
             if(enuStringCompareState == STRING_NOT_MATCHED)
             {
@@ -180,13 +182,13 @@ int main()
                 u8BOptIndex = u8TempStringIndex  ;
             }
 
-         }
-         u8LOptIndex = 0  ;
-         /* get options */
-         enuStringCompareState = STRING_NOT_MATCHED;
-         u8TempStringIndex = u8FromStringIndex - 2;
-         while((enuStringCompareState == STRING_NOT_MATCHED)&&(u8TempStringIndex > 7))
-         {
+        }
+        u8LOptIndex = 0  ;
+        /* get options */
+        enuStringCompareState = STRING_NOT_MATCHED;
+        u8TempStringIndex = u8FromStringIndex - 2;
+        while((enuStringCompareState == STRING_NOT_MATCHED)&&(u8TempStringIndex > 7))
+        {
             enuStringCompareState = compare_string((const U8 *)&au8InputCommand[u8TempStringIndex] , (const U8 *)"-l", 2);
             if(enuStringCompareState == STRING_NOT_MATCHED)
             {
@@ -197,13 +199,13 @@ int main()
                 u8LOptIndex = u8TempStringIndex  ;
             }
 
-         }
-         u8IOptIndex = 0  ;
-         /* get options */
-         enuStringCompareState = STRING_NOT_MATCHED;
-         u8TempStringIndex = u8FromStringIndex - 2;
-         while((enuStringCompareState == STRING_NOT_MATCHED)&&(u8TempStringIndex > 7))
-         {
+        }
+        u8IOptIndex = 0  ;
+        /* get options */
+        enuStringCompareState = STRING_NOT_MATCHED;
+        u8TempStringIndex = u8FromStringIndex - 2;
+        while((enuStringCompareState == STRING_NOT_MATCHED)&&(u8TempStringIndex > 7))
+        {
             enuStringCompareState = compare_string((const U8 *)&au8InputCommand[u8TempStringIndex] , (const U8 *)"-i", 2);
             if(enuStringCompareState == STRING_NOT_MATCHED)
             {
@@ -213,10 +215,10 @@ int main()
             {
                 u8IOptIndex = u8TempStringIndex  ;
             }
-         }
+        }
 
         enuStringCompareState = STRING_MATCHED;
-     }
+    }
 
     if(enuStringCompareState == STRING_MATCHED)
     {
@@ -269,29 +271,29 @@ int main()
                 au8StringNameFile[u8Counter] = '\0';
 
 
-                 FilePointer[u8FileIndex] = (FILE *)fopen( (const char *) &au8StringNameFile[0], "rb");
+                FilePointer[u8FileIndex] = (FILE *)fopen( (const char *) &au8StringNameFile[0], "rb");
 
 
-                 au8StringNameFile[u8Counter - 4] = '_';
-                 au8StringNameFile[u8Counter - 3] = 'B';
-                 au8StringNameFile[u8Counter - 2] = 'K';
-                 au8StringNameFile[u8Counter - 1] = 'P';
-                 au8StringNameFile[u8Counter] = '.';
-                 au8StringNameFile[u8Counter + 1] = 't';
-                 au8StringNameFile[u8Counter + 2] = 'x';
-                 au8StringNameFile[u8Counter+ 3 ] = 't';
-                 au8StringNameFile[u8Counter + 4] = '\0';
+                au8StringNameFile[u8Counter - 4] = '_';
+                au8StringNameFile[u8Counter - 3] = 'B';
+                au8StringNameFile[u8Counter - 2] = 'K';
+                au8StringNameFile[u8Counter - 1] = 'P';
+                au8StringNameFile[u8Counter] = '.';
+                au8StringNameFile[u8Counter + 1] = 't';
+                au8StringNameFile[u8Counter + 2] = 'x';
+                au8StringNameFile[u8Counter+ 3 ] = 't';
+                au8StringNameFile[u8Counter + 4] = '\0';
 
-                 FilePointerBkp[u8FileIndex] = (FILE *)fopen( (const char *) &au8StringNameFile[0], "wb");
+                FilePointerBkp[u8FileIndex] = (FILE *)fopen( (const char *) &au8StringNameFile[0], "wb");
 
-                 a = fgetc(FilePointer[u8FileIndex]);
-                 while( a  != EOF)
-                 {
+                a = fgetc(FilePointer[u8FileIndex]);
+                while( a  != EOF)
+                {
                     fputc(a , FilePointerBkp[u8FileIndex]);
                     a = fgetc(FilePointer[u8FileIndex]);
-                 }
-                 fclose( (FILE *)FilePointer[u8FileIndex] );
-                 fclose( (FILE *)FilePointerBkp[u8FileIndex] );
+                }
+                fclose( (FILE *)FilePointer[u8FileIndex] );
+                fclose( (FILE *)FilePointerBkp[u8FileIndex] );
             }
         }
         enuStringCompareState = STRING_MATCHED;
@@ -358,30 +360,18 @@ int main()
                 FilePointer[u8FileIndex] = (FILE *)fopen( (const char *) &au8StringNameFile[0], "r+");
                 if(u8IOptIndex != 0)
                 {
-                    /* all */
-
-
-                }
-                else
-                {
-                    /* similar */
+                    /* non sensitive */
                     a = 'S';
-                    U8 u8TempFromStringSize;
-                    U8 u8TempCounter = 0 ;
-                    unsigned long u32TempFileAdd = 1 ;
                     fseek(FilePointer[u8FileIndex], 0, SEEK_SET);
-
-                    u32TempFileAdd = ftell(FilePointer[u8FileIndex]);
-                     while( a  != EOF)
-                     {
-
-
-                         u8TempFromStringSize = u8FromStringSize;
-                         u8TempCounter = 0 ;
-                         enuStringCompareState = STRING_MATCHED;
-
-                         while( (u8TempFromStringSize > 0) )
-                         {
+                    while( a  != EOF)
+                    {
+                        u8TempFromStringSize = u8FromStringSize;
+                        u8TempCounter = 0 ;
+                        enuStringCompareState = STRING_MATCHED;
+                        u32TempFileAdd = ftell(FilePointer[u8FileIndex]);
+                        enuStringCompareState = STRING_MATCHED;
+                        while( (u8TempFromStringSize > 0) &&(enuStringCompareState == STRING_MATCHED))
+                        {
                             a = fgetc(FilePointer[u8FileIndex]);
                             if( a == (int)au8InputCommand[u8FromStringIndex + u8TempCounter])
                             {
@@ -393,47 +383,96 @@ int main()
                             }
                             u8TempFromStringSize--;
                             u8TempCounter++;
-                         }
+                        }
 
-                         if(enuStringCompareState == STRING_MATCHED)
-                         {
+                        if(enuStringCompareState == STRING_MATCHED)
+                        {
                             /* replace */
+                            u8TempCounter = ftell(FilePointer[u8FileIndex]);
                             fseek(FilePointer[u8FileIndex], u32TempFileAdd, SEEK_SET);
+                            u8TempCounter = ftell(FilePointer[u8FileIndex]);
                             u8TempFromStringSize = u8ToStringSize;
-                            fputc(au8InputCommand[u8FromStringIndex +0] , FilePointer[u8FileIndex]);
-                            fputc(au8InputCommand[u8FromStringIndex +1] , FilePointer[u8FileIndex]);
-                            fputc(au8InputCommand[u8FromStringIndex +2] , FilePointer[u8FileIndex]);
-                            fputc(au8InputCommand[u8FromStringIndex +3] , FilePointer[u8FileIndex]);
-                            fputc(au8InputCommand[u8FromStringIndex +4] , FilePointer[u8FileIndex]);
-                         }
-                          u32TempFileAdd++;
+                            for(u8TempCounter  = 0 ; u8TempCounter < u8ToStringSize; u8TempCounter++)
+                            {
+                                fputc(au8InputCommand[u8ToStringIndex + u8TempCounter] , FilePointer[u8FileIndex]);
+                            }
 
-                     }
+                            u32TempFileAdd = ftell(FilePointer[u8FileIndex]);
+                            u32TempFileAdd -= 1 ;
+                            fseek(FilePointer[u8FileIndex], u32TempFileAdd, SEEK_SET);
+                            u8TempCounter = ftell(FilePointer[u8FileIndex]);
+                            fseek(FilePointer[u8FileIndex], u32TempFileAdd, SEEK_SET);
+                            u8TempCounter = ftell(FilePointer[u8FileIndex]);
 
-
-
+                        }
+                        else
+                        {
+                            u32TempFileAdd += 1;
+                        }
+                    }
                 }
-                    fclose( (FILE *)FilePointer[u8FileIndex] );
+                else
+                {
+                    /* similar */
+                    a = 'S';
+                    fseek(FilePointer[u8FileIndex], 0, SEEK_SET);
+                    while( a  != EOF)
+                    {
+                        u8TempFromStringSize = u8FromStringSize;
+                        u8TempCounter = 0 ;
+                        enuStringCompareState = STRING_MATCHED;
+                        u32TempFileAdd = ftell(FilePointer[u8FileIndex]);
+                        enuStringCompareState = STRING_MATCHED;
+                        while( (u8TempFromStringSize > 0) &&(enuStringCompareState == STRING_MATCHED))
+                        {
+                            a = fgetc(FilePointer[u8FileIndex]);
+                            if( a == (int)au8InputCommand[u8FromStringIndex + u8TempCounter])
+                            {
+                                enuStringCompareState = STRING_MATCHED;
+                            }
+                            else
+                            {
+                                enuStringCompareState = STRING_NOT_MATCHED;
+                            }
+                            u8TempFromStringSize--;
+                            u8TempCounter++;
+                        }
+
+                        if(enuStringCompareState == STRING_MATCHED)
+                        {
+                            /* replace */
+                            u8TempCounter = ftell(FilePointer[u8FileIndex]);
+                            fseek(FilePointer[u8FileIndex], u32TempFileAdd, SEEK_SET);
+                            u8TempCounter = ftell(FilePointer[u8FileIndex]);
+                            u8TempFromStringSize = u8ToStringSize;
+                            for(u8TempCounter  = 0 ; u8TempCounter < u8ToStringSize; u8TempCounter++)
+                            {
+                                fputc(au8InputCommand[u8ToStringIndex + u8TempCounter] , FilePointer[u8FileIndex]);
+                            }
+
+                            u32TempFileAdd = ftell(FilePointer[u8FileIndex]);
+                            u32TempFileAdd -= 1 ;
+                            fseek(FilePointer[u8FileIndex], u32TempFileAdd, SEEK_SET);
+                            u8TempCounter = ftell(FilePointer[u8FileIndex]);
+                            fseek(FilePointer[u8FileIndex], u32TempFileAdd, SEEK_SET);
+                            u8TempCounter = ftell(FilePointer[u8FileIndex]);
+
+                        }
+                        else
+                        {
+                            u32TempFileAdd += 1;
+                        }
+                    }
                 }
+                fclose( (FILE *)FilePointer[u8FileIndex] );
+            }
 
         }
     }
-     if(enuStringCompareState == STRING_NOT_MATCHED)
-     {
-         printf("Error in paremeters\n");
-     }
-     /*printf("%d", sizeof(au8InputCommand));*/
-     /* _CRTIMP int __cdecl __MINGW_NOTHROW	strcmp (const char*, const char*)  __MINGW_ATTRIB_PURE; */
-//    if((strcmp((const C8 *)au8InputCommand , (const C8 *)"replace -i Howdy Hello -- file1.txt file2.txt file3.txt")) == 0)
-    /*if((strcmp((const C8 *)au8InputCommand , (const C8 *)"replace")) == 0)*/
-//    {
-//      printf("MATCHED\n");
-     /* fopen (const char*, const char*);*/
-    /* fopen (const char*, const char*);*/
-//    }
-//    else
-    //{
-//      printf("NOT MATCHED\n");
-    //}
+    if(enuStringCompareState == STRING_NOT_MATCHED)
+    {
+        printf("Error in paremeters\n");
+    }
+
     return 0;
 }
