@@ -72,6 +72,9 @@ int main()
     char au8StringNameFile[20];
     U8 u8Counter = 0 ;
     int a;
+    int aLowerCase;
+    int aUpperCase;
+    int LetterNoCase ;
     U8 u8TempFromStringSize;
     U8 u8TempCounter = 0 ;
     unsigned long u32TempFileAdd = 1 ;
@@ -360,20 +363,39 @@ int main()
                 FilePointer[u8FileIndex] = (FILE *)fopen( (const char *) &au8StringNameFile[0], "r+");
                 if(u8IOptIndex != 0)
                 {
-                    /* non sensitive */
+
+                    /* similar */
                     a = 'S';
                     fseek(FilePointer[u8FileIndex], 0, SEEK_SET);
                     while( a  != EOF)
                     {
-                        u8TempFromStringSize = u8FromStringSize;
                         u8TempCounter = 0 ;
+                        u8TempFromStringSize = u8FromStringSize;
                         enuStringCompareState = STRING_MATCHED;
                         u32TempFileAdd = ftell(FilePointer[u8FileIndex]);
-                        enuStringCompareState = STRING_MATCHED;
+
                         while( (u8TempFromStringSize > 0) &&(enuStringCompareState == STRING_MATCHED))
                         {
                             a = fgetc(FilePointer[u8FileIndex]);
-                            if( a == (int)au8InputCommand[u8FromStringIndex + u8TempCounter])
+                            LetterNoCase = (int)au8InputCommand[u8FromStringIndex + u8TempCounter];
+                            if ((a >= 65) && (a <= 90))
+                            {
+                                aLowerCase = a + 32;
+                            }
+                            else
+                            {
+                                aLowerCase = a ;
+                            }
+                            if((a >= 97) && (a <= 122))
+                            {
+                                aUpperCase = a - 32;
+                            }
+                            else
+                            {
+                                aUpperCase = a ;
+                            }
+
+                            if( (LetterNoCase == aLowerCase) || (LetterNoCase == aUpperCase))
                             {
                                 enuStringCompareState = STRING_MATCHED;
                             }
@@ -388,10 +410,9 @@ int main()
                         if(enuStringCompareState == STRING_MATCHED)
                         {
                             /* replace */
-                            u8TempCounter = ftell(FilePointer[u8FileIndex]);
                             fseek(FilePointer[u8FileIndex], u32TempFileAdd, SEEK_SET);
-                            u8TempCounter = ftell(FilePointer[u8FileIndex]);
                             u8TempFromStringSize = u8ToStringSize;
+
                             for(u8TempCounter  = 0 ; u8TempCounter < u8ToStringSize; u8TempCounter++)
                             {
                                 fputc(au8InputCommand[u8ToStringIndex + u8TempCounter] , FilePointer[u8FileIndex]);
@@ -400,9 +421,6 @@ int main()
                             u32TempFileAdd = ftell(FilePointer[u8FileIndex]);
                             u32TempFileAdd -= 1 ;
                             fseek(FilePointer[u8FileIndex], u32TempFileAdd, SEEK_SET);
-                            u8TempCounter = ftell(FilePointer[u8FileIndex]);
-                            fseek(FilePointer[u8FileIndex], u32TempFileAdd, SEEK_SET);
-                            u8TempCounter = ftell(FilePointer[u8FileIndex]);
 
                         }
                         else
@@ -418,11 +436,11 @@ int main()
                     fseek(FilePointer[u8FileIndex], 0, SEEK_SET);
                     while( a  != EOF)
                     {
-                        u8TempFromStringSize = u8FromStringSize;
                         u8TempCounter = 0 ;
+                        u8TempFromStringSize = u8FromStringSize;
                         enuStringCompareState = STRING_MATCHED;
                         u32TempFileAdd = ftell(FilePointer[u8FileIndex]);
-                        enuStringCompareState = STRING_MATCHED;
+
                         while( (u8TempFromStringSize > 0) &&(enuStringCompareState == STRING_MATCHED))
                         {
                             a = fgetc(FilePointer[u8FileIndex]);
@@ -441,10 +459,9 @@ int main()
                         if(enuStringCompareState == STRING_MATCHED)
                         {
                             /* replace */
-                            u8TempCounter = ftell(FilePointer[u8FileIndex]);
                             fseek(FilePointer[u8FileIndex], u32TempFileAdd, SEEK_SET);
-                            u8TempCounter = ftell(FilePointer[u8FileIndex]);
                             u8TempFromStringSize = u8ToStringSize;
+
                             for(u8TempCounter  = 0 ; u8TempCounter < u8ToStringSize; u8TempCounter++)
                             {
                                 fputc(au8InputCommand[u8ToStringIndex + u8TempCounter] , FilePointer[u8FileIndex]);
@@ -453,9 +470,6 @@ int main()
                             u32TempFileAdd = ftell(FilePointer[u8FileIndex]);
                             u32TempFileAdd -= 1 ;
                             fseek(FilePointer[u8FileIndex], u32TempFileAdd, SEEK_SET);
-                            u8TempCounter = ftell(FilePointer[u8FileIndex]);
-                            fseek(FilePointer[u8FileIndex], u32TempFileAdd, SEEK_SET);
-                            u8TempCounter = ftell(FilePointer[u8FileIndex]);
 
                         }
                         else
